@@ -30,7 +30,7 @@ function argFromKeyVal(key, val, opts) {
     }
     return a.join(' ');
   } else {
-    if ((key.length === 1) || opts.__spaceForLongArgs___) {
+    if ((key.length === 1) || opts.spaceForLongArgs) {
       return prefix + key + ' ' + escapeArg(val);
     } else {
       return prefix + key + '=' + escapeArg(val);
@@ -39,7 +39,7 @@ function argFromKeyVal(key, val, opts) {
 
 }
 
-function argsListFromObject(args) {
+function argsListFromObject(args, opts) {
   if (!args) {
     return [];
   }
@@ -54,7 +54,7 @@ function argsListFromObject(args) {
       continue;
     }
     var val = args[key];
-    a.push(argFromKeyVal(key, val, args));
+    a.push(argFromKeyVal(key, val, opts));
   }
 
   if (args._) {
@@ -68,7 +68,7 @@ function argsListFromObject(args) {
 
 function execAsync(cmd, args, opts) {
   return new Promise(function (fulfill, reject) {
-    child_process.execFile(cmd, argsListFromObject(args), opts, function (err, result) {
+    child_process.execFile(cmd, argsListFromObject(args, opts), opts, function (err, result) {
       if (err) {
         reject(err);
       } else {
