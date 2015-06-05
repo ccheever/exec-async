@@ -12,7 +12,7 @@ function escapeArg(s) {
   return s;
 }
 
-function argFromKeyVal(key, val, opts) {
+function argsFromKeyVal(key, val, opts) {
   opts = opts || {};
   var prefix = '--';
   if (key.length === 1) {
@@ -22,18 +22,18 @@ function argFromKeyVal(key, val, opts) {
   if ((val === true) || (val == null)) {
     return prefix + key;
   }  else if (val === false) {
-    return prefix + 'no' + key;
+    return [prefix + 'no' + key];
   } else if (Array.isArray(val)) {
     var a = [];
     for (var j = 0; j < val.length; j++) {
-      a.push(argFromKeyVal(key, val[j]));
+      a = a.concat(argsFromKeyVal(key, val[j], opts));
     }
-    return a.join(' ');
+    return a;
   } else {
     if ((key.length === 1) || opts.spaceForLongArgs) {
-      return prefix + key + ' ' + escapeArg(val);
+      return [prefix + key, val];
     } else {
-      return prefix + key + '=' + escapeArg(val);
+      return [prefix + key + '=' + escapeArg(val)];
     }
   }
 
@@ -54,7 +54,7 @@ function argsListFromObject(args, opts) {
       continue;
     }
     var val = args[key];
-    a.push(argFromKeyVal(key, val, opts));
+    a = a.concat(argsFromKeyVal(key, val, opts));
   }
 
   if (args._) {
@@ -80,4 +80,5 @@ function execAsync(cmd, args, opts) {
 
 module.exports = execAsync;
 module.exports.argsListFromObject = argsListFromObject;
+module.exports.argsFromKeyVal = argsFromKeyVal;
 module.exports.escapeArg = escapeArg;
