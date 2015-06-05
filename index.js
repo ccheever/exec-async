@@ -20,7 +20,7 @@ function argFromKeyVal(key, val, opts) {
     return prefix + key;
   }  else if (val === false) {
     return prefix + 'no' + key;
-  } else if (typeof(val) === 'object') {
+  } else if (Array.isArray(val)) {
     var a = [];
     for (var j = 0; j < val.length; j++) {
       a.push(argFromKeyVal(key, val[j]));
@@ -40,6 +40,9 @@ function argsListFromObject(args) {
   if (!args) {
     return [];
   }
+  if (Array.isArray(args)) {
+    return argsListFromObject({_:args});
+  }
   var a = [];
   var keys = Object.keys(args);
   for (var i = 0; i < keys.length; i++) {
@@ -53,7 +56,7 @@ function argsListFromObject(args) {
 
   if (args._) {
     for (var i = 0; i < args._.length; i++) {
-      a.push('' + args._[i]);
+      a.push('' + escape(args._[i]));
     }
   }
   return a;

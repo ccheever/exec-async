@@ -1,6 +1,6 @@
 {
   "name": "shell-exec-async",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Returns a promise with the results of a shell command",
   "main": "index.js",
   "scripts": {
