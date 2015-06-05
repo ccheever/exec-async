@@ -56,7 +56,8 @@ function argsListFromObject(args) {
 
   if (args._) {
     for (var i = 0; i < args._.length; i++) {
-      a.push('' + escape(args._[i]));
+      // Don't escape here since `execFile` will escape the args for us
+      a.push('' + args._[i]);
     }
   }
   return a;
