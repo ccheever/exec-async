@@ -1,2 +1,2 @@
-# shell-exec-async
+# exec-async
 Returns a promise with the results of a shell command

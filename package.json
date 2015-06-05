@@ -1,6 +1,6 @@
 {
-  "name": "shell-exec-async",
-  "version": "1.1.1",
+  "name": "exec-async",
+  "version": "2.0.0",
   "description": "Returns a promise with the results of a shell command",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ccheever/shell-exec-async.git"
+    "url": "git+https://github.com/ccheever/exec-async.git"
   },
   "keywords": [
     "shell",
@@ -18,7 +18,7 @@
   "author": "Charlie Cheever <ccheever@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ccheever/shell-exec-async/issues"
+    "url": "https://github.com/ccheever/exec-async/issues"
   },
-  "homepage": "https://github.com/ccheever/shell-exec-async#readme"
+  "homepage": "https://github.com/ccheever/exec-async#readme"
 }
