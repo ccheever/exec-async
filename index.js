@@ -1,6 +1,9 @@
 var child_process = require('child_process');
 
-function escape(s) {
+function escapeArg(s) {
+  if (s === '') {
+    return "''";
+  }
   if (/[^A-Za-z0-9_\/:=-]/.test(s)) {
     s = "'"+s.replace(/'/g,"'\\''")+"'";
     s = s.replace(/^(?:'')+/g, '') // unduplicate single-quote at the beginning
@@ -28,9 +31,9 @@ function argFromKeyVal(key, val, opts) {
     return a.join(' ');
   } else {
     if ((key.length === 1) || opts.__spaceForLongArgs___) {
-      return prefix + key + ' ' + escape(val);
+      return prefix + key + ' ' + escapeArg(val);
     } else {
-      return prefix + key + '=' + escape(val);
+      return prefix + key + '=' + escapeArg(val);
     }
   }
 
@@ -63,7 +66,7 @@ function argsListFromObject(args) {
   return a;
 }
 
-function shellExecAsync(cmd, args, opts) {
+function execAsync(cmd, args, opts) {
   return new Promise(function (fulfill, reject) {
     child_process.execFile(cmd, argsListFromObject(args), opts, function (err, result) {
       if (err) {
@@ -75,5 +78,6 @@ function shellExecAsync(cmd, args, opts) {
   });
 }
 
-module.exports = shellExecAsync;
+module.exports = execAsync;
 module.exports.argsListFromObject = argsListFromObject;
+module.exports.escapeArg = escapeArg;
